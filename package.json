@@ -1,7 +1,7 @@
 {
-  "name": "curl-investigator",
+  "name": "curl-redirector",
   "version": "1.0.0",
-  "description": "libcurl hooking tool",
+  "description": "libcurl redirecting tool",
   "private": true,
   "main": "agent/index.ts",
   "scripts": {
