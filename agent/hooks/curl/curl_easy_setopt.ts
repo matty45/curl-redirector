@@ -21,14 +21,16 @@ export function hook_curl_easy_setopt() {
 
           log(`[CURL ${handle}]: Original URL: ${originalUrl}`);
 
-          // Manual URL parsing to extract path and query  
-          const urlMatch = originalUrl.match(/^https?:\/\/[^\/]+(\/[^?#]*)?(\?[^#]*)?(#.*)?$/);
-          const path = urlMatch ? (urlMatch[1] || '/') : '/';
-          const query = urlMatch ? (urlMatch[2] || '') : '';
-          const redirectedUrl = redirect_server + path + query;
+          var splitURL = originalUrl.toString().split("/");
+          splitURL[0] = "http:"
+          splitURL[2] = redirect_server
+
+          const redirectedUrl = splitURL.join("/");
+
+          const buf = Memory.allocUtf8String(redirectedUrl);
 
           // Write the redirect URL with preserved path  
-          parameter.writeUtf8String(redirectedUrl);
+          args[2] = buf;
           log(`[CURL ${handle}]: Redirected to: ${redirectedUrl}`);
           break;
       }

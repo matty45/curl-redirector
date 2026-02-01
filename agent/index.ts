@@ -6,8 +6,10 @@ import { hook_curl_easy_setopt } from "./hooks/curl/curl_easy_setopt";
 //Initialize globals/settings
 export const curl = Process.getModuleByName("libcurl.dll"); // Change this depending on the OS you are using!  
 
-//URL to redirect requests to.
-export const redirect_server = "http://example.com"
+/*
+ Hostname and optional port to redirect requests to.
+*/
+export const redirect_server = "127.0.0.1:3000"
 
 // Bypass ssl pinning
 export const bypass_ssl_pinning = true;
