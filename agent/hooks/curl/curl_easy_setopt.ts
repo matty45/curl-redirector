@@ -13,7 +13,7 @@ export function hook_curl_easy_setopt() {
 
       switch (curloption) {
         case CurlOptions.Url: // CURLOPT_URL    
-          const originalUrl = parameter.readUtf8String();
+          const originalUrl = parameter.readCString();
 
           if (!originalUrl) {
             return;
@@ -27,11 +27,11 @@ export function hook_curl_easy_setopt() {
 
           const redirectedUrl = splitURL.join("/");
 
-          const buf = Memory.allocUtf8String(redirectedUrl);
+          const buf = Memory.allocAnsiString(redirectedUrl);
 
           // Write the redirect URL with preserved path  
           args[2] = buf;
-          log(`[CURL ${handle}]: Redirected to: ${redirectedUrl}`);
+          log(`[CURL ${handle}]: Redirected to: ${buf.toString()}`);
           break;
       }
     },
