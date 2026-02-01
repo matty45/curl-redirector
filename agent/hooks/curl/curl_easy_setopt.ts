@@ -5,6 +5,8 @@ import { log } from "../../logger";
 export function hook_curl_easy_setopt() {
   const curl_easy_setopt = curl.getExportByName("curl_easy_setopt");
 
+  var string_buf = null
+
   Interceptor.attach(curl_easy_setopt, {
     onEnter(args) {
       const handle = args[0];
@@ -26,11 +28,12 @@ export function hook_curl_easy_setopt() {
           splitURL[2] = redirect_server
 
           const redirectedUrl = splitURL.join("/");
+          
+          string_buf = Memory.allocAnsiString(redirectedUrl);
 
-          const buf = Memory.allocAnsiString(redirectedUrl);
-
+          this.buf = string_buf; // keep alive  
           // Write the redirect URL with preserved path  
-          args[2] = buf;
+          args[2] = string_buf;
           log(`[CURL ${handle}]: Redirected to: ${redirectedUrl}`);
           break;
       }
