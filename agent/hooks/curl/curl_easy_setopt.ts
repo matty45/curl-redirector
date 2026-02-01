@@ -31,7 +31,7 @@ export function hook_curl_easy_setopt() {
 
           // Write the redirect URL with preserved path  
           args[2] = buf;
-          log(`[CURL ${handle}]: Redirected to: ${buf.toString()}`);
+          log(`[CURL ${handle}]: Redirected to: ${redirectedUrl}`);
           break;
       }
     },
